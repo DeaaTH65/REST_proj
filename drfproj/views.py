@@ -8,11 +8,10 @@ from drfapp.models import Student
 
 class TesView(APIView):
     def get(self, request, *args, **kwargs):
-        data = {
-            'username': 'admin',
-            'years_active': 10
-        }
-        return Response(data)
+        qs = Student.objects.all()
+        student1 = qs.first()
+        serializer = StudentSerializer(student1)
+        return Response(serializer.data)
     
     def post(self, request, *args, **kwargs):
         serializer = StudentSerializer(data=request.data)
